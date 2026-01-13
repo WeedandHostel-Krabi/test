@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Bike & Cannabis’s Super Shop Krabi Town | Quality & Cheap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        [x-cloak] { display: none !important; }
+        .hero-gradient { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)); }
+        
+        /* Logic for Favorites Section Animation */
+        .animation-container {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-card {
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+            position: absolute;
+            width: 200px;
+            z-index: 10;
+            opacity: 1;
+        }
+
+        /* DESKTOP: Side by Side */
+        @media (min-width: 768px) {
+            .photo-left { transform: translateX(0) rotate(-5deg); }
+            .photo-right { transform: translateX(0) rotate(5deg); }
+            
+            .is-visible .photo-left { transform: translateX(-380px) rotate(-12deg); }
+            .is-visible .photo-right { transform: translateX(380px) rotate(12deg); }
+        }
+
+        /* MOBILE: Top and Bottom (Ajusté pour éviter la superposition) */
+        @media (max-width: 767px) {
+            .photo-card { width: 140px; }
+            .photo-left { transform: translateY(0) rotate(-3deg); z-index: 5; opacity: 0; }
+            .photo-right { transform: translateY(0) rotate(3deg); z-index: 5; opacity: 0; }
+
+            /* Augmentation de l'espacement à 200px pour libérer le texte */
+            .is-visible .photo-left { transform: translateY(-200px) rotate(-8deg); opacity: 0.8; }
+            .is-visible .photo-right { transform: translateY(200px) rotate(8deg); opacity: 0.8; }
+            
+            .animation-container { height: 550px; } /* Augmenté pour laisser la place aux photos */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans" x-data="languageManager()">
+
+    <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+            <div class="text-xl md:text-2xl font-black tracking-tighter leading-tight">
+                <span class="text-white">BIG BIKE & </span><span class="text-green-500">CANNABIS</span>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <div class="hidden md:flex space-x-4 mr-6 border-r border-white/20 pr-6">
+                    <a href="#" class="hover:text-green-500 transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-green-500 transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-green-500 transition"><i class="fab fa-whatsapp"></i></a>
+                </div>
+                
+                <div class="flex space-x-2 bg-white/10 p-1 rounded-full">
+                    <button @click="setLang('en')" class="w-8 h-8 rounded-full overflow-hidden border-2" :class="lang === 'en' ? 'border-green-500' : 'border-transparent'"><img src="https://flagcdn.com/w40/gb.png" class="w-full h-full object-cover"></button>
+                    <button @click="setLang('th')" class="w-8 h-8 rounded-full overflow-hidden border-2" :class="lang === 'th' ? 'border-green-500' : 'border-transparent'"><img src="https://flagcdn.com/w40/th.png" class="w-full h-full object-cover"></button>
+                    <button @click="setLang('fr')" class="w-8 h-8 rounded-full overflow-hidden border-2" :class="lang === 'fr' ? 'border-green-500' : 'border-transparent'"><img src="https://flagcdn.com/w40/fr.png" class="w-full h-full object-cover"></button>
+                    <button @click="setLang('de')" class="w-8 h-8 rounded-full overflow-hidden border-2" :class="lang === 'de' ? 'border-green-500' : 'border-transparent'"><img src="https://flagcdn.com/w40/de.png" class="w-full h-full object-cover"></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
+        <div class="absolute inset-0 bg-gray-800 z-0">
+             <div class="w-full h-full hero-gradient"></div>
+        </div>
+        <div class="relative z-10 max-w-4xl">
+            <h1 class="text-5xl md:text-7xl font-black mb-6 uppercase leading-none" x-text="t[lang].heroTitle"></h1>
+            <p class="text-xl md:text-2xl mb-8 text-gray-200" x-text="t[lang].heroSub"></p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="#rent" class="bg-green-600 hover:bg-green-500 px-8 py-4 rounded-full font-bold text-lg transition transform hover:scale-105" x-text="t[lang].btnRent"></a>
+                <a href="#chill" class="bg-white/10 hover:bg-white/20 backdrop-blur px-8 py-4 rounded-full font-bold text-lg transition" x-text="t[lang].btnChill"></a>
+            </div>
+        </div>
+    </header>
+
+    <section id="rent" class="py-24 px-4 bg-white text-black text-center">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl font-black uppercase mb-4" x-text="t[lang].rentTitle"></h2>
+            <p class="text-gray-600 mb-16 max-w-2xl mx-auto" x-text="t[lang].rentDesc"></p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <template x-for="i in [1,2,3]">
+                    <div class="bg-gray-100 rounded-2xl overflow-hidden border border-gray-200 hover:shadow-xl transition text-left">
+                        <div class="aspect-video bg-gray-300"></div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2">Honda Click 125i / 160i</h3>
+                            <p class="text-green-600 font-black text-2xl mb-4" x-text="t[lang].priceBike"></p>
+                            <ul class="text-sm space-y-2 mb-6 text-gray-500">
+                                <li><i class="fas fa-check text-green-500 mr-2"></i> <span x-text="t[lang].feature1"></span></li>
+                                <li><i class="fas fa-check text-green-500 mr-2"></i> <span x-text="t[lang].feature2"></span></li>
+                            </ul>
+                            <a href="#" class="block text-center bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition" x-text="t[lang].bookNow"></a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <section id="chill" class="py-24 px-4 bg-gray-950">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <h2 class="text-4xl font-black uppercase mb-6 text-green-500" x-text="t[lang].weedTitle"></h2>
+                <p class="text-xl text-gray-400 mb-8" x-text="t[lang].weedDesc"></p>
+                <div class="bg-green-900/20 border border-green-500/30 p-6 rounded-2xl mb-8">
+                    <p class="text-3xl font-black mb-2 text-center md:text-left" x-text="t[lang].priceWeed"></p>
+                    <p class="text-green-400 uppercase tracking-widest text-sm text-center md:text-left" x-text="t[lang].qualityTag"></p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 bg-white/5 rounded-xl border border-white/10 text-center"><i class="fas fa-billiards text-2xl mb-2 text-green-500"></i><p class="font-bold">Snooker / Pool</p></div>
+                    <div class="p-4 bg-white/5 rounded-xl border border-white/10 text-center"><i class="fas fa-couch text-2xl mb-2 text-green-500"></i><p class="font-bold">Living Room</p></div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="aspect-square rounded-2xl overflow-hidden bg-gray-800"><img src="https://lh3.googleusercontent.com/p/AF1QipMJTZ2aT5GK4bDkGtc8d-OTuMUJyOqi5JbvUzTb=w203-h270-k-no" class="w-full h-full object-cover"></div>
+                <div class="aspect-square rounded-2xl overflow-hidden bg-gray-800 mt-8"><img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSz88bkxKF0s1_zieQdEhkX2do1dHrJP2EqZ3gUlfWDHysf2iPi2nhClbNSZddMNOd6Btc707U2sOIHJe9i64zdAfN3Wltv38Thb8rktNqZEbqDXOBoeMizpMQI4LH3Sx5u8-QP7=s507-k-no" class="w-full h-full object-cover"></div>
+                <div class="aspect-square rounded-2xl overflow-hidden bg-gray-800 -mt-8"><img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSwKVHtAC30kdU4is_OgR9hB9sQDFNqzA9YfanmoXh797QCg2PjTpt_gJj-1x3iEeXdzo2cQkk8k4yiW1qj1IzRLvsnr9DZw3EGqmqa8TVQf_gDvIUtBr0VU3fDCWXOfBu59IH_Xuw=w203-h152-k-no" class="w-full h-full object-cover"></div>
+                <div class="aspect-square rounded-2xl overflow-hidden bg-gray-800">
+                    <video autoplay muted loop playsinline class="w-full h-full object-cover">
+                        <source src="https://rr3---sn-npoeen66.googlevideo.com/videoplayback?expire=1767507666&ei=supZaYD0OKK5rtoPkLbZ4AY&ip=184.22.159.212&id=68497b06325b2699&itag=18&source=picasa&begin=0&requiressl=yes&xpc=Eghoy-b0JXoBAQ==&met=1767500466,&mh=kn&mm=32&mn=sn-npoeen66&ms=su&mv=m&mvi=3&pl=22&rms=su,su&sc=yes&susc=ph&app=fife&ic=945&pcm2=yes&mime=video/mp4&vprv=1&prv=1&rqh=1&dur=13.630&lmt=1733805454504715&mt=1767499512&cpn=_TmPSZ1L_CPoEB8D&txp=0000224&sparams=expire,ei,ip,id,itag,source,requiressl,xpc,susc,app,ic,pcm2,mime,vprv,prv,rqh,dur,lmt&sig=AJfQdSswRAIgU30XCxIqPDnji9LauPMDMg1-ivi5hDnCs5sSvGmq2X4CIEyRbOYAOWqYupb3g54VPvAufePP5vMcfrm8f3tfvMoO&lsparams=met,mh,mm,mn,ms,mv,mvi,pl,rms,sc&lsig=APaTxxMwRAIgTODgJWP0ANEOMJaNjhBroJ-X5f6lkij47CeLOvoZb3cCIHrXg6tyvkahKJc0px1M3nxC16Nsx-Fp5OF7U-Vo3cYu" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="location" class="py-24 px-4 bg-gray-900 border-t border-white/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-black uppercase mb-4" x-text="t[lang].locTitle"></h2>
+                <p class="text-gray-400" x-text="t[lang].locAddress"></p>
+            </div>
+            <div class="rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-gray-800">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.418247672223!2d98.9169116!3d8.0587784!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x305191000f000001%3A0x1d5d1d1d1d1d1d1d!2s6%20Khongkha%20Rd%2C%20Pak%20Nam%2C%20Amphoe%20Mueang%20Krabi%2C%20Krabi%2081000!5e0!3m2!1sen!2sth!4v1700000000000" width="100%" height="450" style="border:0;" loading="lazy"></iframe>
+                <div class="p-8 text-center bg-gray-800">
+                    <button @click="openMaps()" class="inline-flex items-center space-x-3 bg-white text-black px-10 py-4 rounded-full font-black text-lg hover:bg-green-500 hover:text-white transition transform hover:scale-105">
+                        <i class="fas fa-location-arrow"></i><span x-text="t[lang].btnDirections"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="favorites" 
+             class="py-32 bg-gray-950 overflow-hidden" 
+             x-data="{ visible: false }" 
+             x-intersect:enter="visible = true"
+             :class="visible ? 'is-visible' : ''">
+        
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="animation-container">
+                
+                <div class="photo-card photo-left border-4 border-white shadow-2xl rounded-xl overflow-hidden bg-gray-800">
+                    <img src="https://lh3.googleusercontent.com/p/AF1QipOzOiwiEnBg-VLdfLRSJUqtAubzLCHrepzdmKrb=w203-h152-k-no" class="w-full h-auto">
+                </div>
+
+                <div class="photo-card photo-right border-4 border-white shadow-2xl rounded-xl overflow-hidden bg-gray-800">
+                    <img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSxz9u2dhAMNwXUgw3rWCSECRljethD7lCgWNg-_bgE2T8sHLtfcSqX3RkTUprFM3MFqAUSD3SGa7S1jLyUvMsBp8I_MOrGVN2B9RrI2VHXf_YU9gp7O74VJ1l4HlWdpZ0FTxCY=w203-h152-k-no" class="w-full h-auto">
+                </div>
+
+                <div class="text-center z-30 max-w-xl relative">
+                    <h2 class="text-4xl md:text-6xl font-black uppercase text-white mb-6 leading-tight drop-shadow-2xl" x-text="t[lang].favTitle"></h2>
+                    <div class="w-20 h-2 bg-green-500 mx-auto mb-6"></div>
+                    <p class="text-lg md:text-xl text-gray-300 font-medium px-4" x-text="t[lang].favSub"></p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 text-center px-4 bg-black">
+        <div class="flex justify-center space-x-8 mb-8">
+            <a href="#" class="text-3xl hover:text-green-500 transition"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-3xl hover:text-green-500 transition"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-3xl hover:text-green-500 transition"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p class="text-gray-500 text-sm">© 2024 Big Bike & Cannabis’s Super Shop Krabi Town</p>
+    </footer>
+
+    <a href="#" class="fixed bottom-6 right-6 bg-green-500 w-16 h-16 rounded-full flex items-center justify-center shadow-2xl z-50 hover:scale-110 transition"><i class="fab fa-whatsapp text-3xl"></i></a>
+
+    <script>
+        function languageManager() {
+            return {
+                lang: localStorage.getItem('userLang') || 'en',
+                setLang(l) { this.lang = l; localStorage.setItem('userLang', l); },
+                openMaps() {
+                    const address = "6 Khongkha Rd, Pak Nam, Amphoe Mueang Krabi, Krabi 81000";
+                    const encodedAddress = encodeURIComponent(address);
+                    if (navigator.platform.indexOf('iPhone') !== -1 || navigator.platform.indexOf('iPad') !== -1) {
+                        window.open(`maps://maps.apple.com/?q=${encodedAddress}`);
+                    } else { window.open(`http://googleusercontent.com/maps.google.com/maps?q=${encodedAddress}`); }
+                },
+                t: {
+                    en: {
+                        heroTitle: "High Quality. Cheap Prices.",
+                        heroSub: "The best scooters and premium weed in Krabi Town. No tourist traps, just local vibes.",
+                        btnRent: "Rent a Scooter",
+                        btnChill: "Visit Coffee Shop",
+                        rentTitle: "Premium Rentals",
+                        rentDesc: "New bikes, fully maintained. No passport games, just reliable freedom in Krabi.",
+                        priceBike: "From 150 THB / Day",
+                        feature1: "Insurance Included",
+                        feature2: "2 Helmets provided",
+                        bookNow: "Reserve on WhatsApp",
+                        weedTitle: "The Best Buds in Krabi",
+                        weedDesc: "From farm to your pipe. Our lounge is the perfect spot for locals and travelers to meet over a game of snooker.",
+                        priceWeed: "From 100 THB / gram",
+                        qualityTag: "Premium Quality Guaranteed",
+                        locTitle: "How to get there",
+                        locAddress: "6 Khongkha Rd, Pak Nam, Krabi Town 81000",
+                        btnDirections: "Get Directions",
+                        favTitle: "Foreigners and Locals favorite choices!",
+                        favSub: "Join the community where quality meets Krabi's authentic lifestyle."
+                    },
+                    th: {
+                        heroTitle: "คุณภาพสูง ราคาคนไทย",
+                        heroSub: "มอเตอร์ไซค์ให้เช่าและกัญชาเกรดพรีเมียมในตัวเมืองกระบี่ บรรยากาศเป็นกันเอง ราคาถูกที่สุด",
+                        btnRent: "เช่ารถมอเตอร์ไซค์",
+                        btnChill: "ไปที่ร้านกัญชา",
+                        rentTitle: "รถเช่าคุณภาพ",
+                        rentDesc: "รถใหม่ สภาพดี พร้อมใช้งาน ไม่มีการเก็บพาสปอร์ต เที่ยวกระบี่อย่างสบายใจ",
+                        priceBike: "เริ่มเพียง 150 บาท / วัน",
+                        feature1: "รวมประกันรถ",
+                        feature2: "ฟรีหมวกกันน็อค 2 ใบ",
+                        bookNow: "จองผ่าน WhatsApp",
+                        weedTitle: "กัญชาเกรดพรีเมียม",
+                        weedDesc: "ส่งตรงจากฟาร์ม มุมพักผ่อนมีโต๊ะสนุ๊กเกอร์ แอร์เย็นฉ่ำ เหมาะสำหรับคนท้องถิ่นและนักท่องเที่ยว",
+                        priceWeed: "เริ่มเพียง 100 บาท / กรัม",
+                        qualityTag: "รับประกันคุณภาพพรีเมียม",
+                        locTitle: "วิธีการเดินทาง",
+                        locAddress: "6 ถนนคงคา ต.ปากน้ำ อ.เมืองกระบี่ 81000",
+                        btnDirections: "ขอเส้นทาง",
+                        favTitle: "ตัวเลือกยอดนิยมของทั้งชาวต่างชาติและชาวไทย!",
+                        favSub: "เข้าร่วมชุมชนที่คุณภาพมาพบกับวิถีชีวิตที่แท้จริงของกระบี่"
+                    },
+                    fr: {
+                        heroTitle: "Haute Qualité. Petits Prix.",
+                        heroSub: "Les meilleurs scooters et de la weed premium à Krabi Town. Pas de piège à touristes.",
+                        btnRent: "Louer un Scooter",
+                        btnChill: "Côté Coffee Shop",
+                        rentTitle: "Locations Premium",
+                        rentDesc: "Motos neuves et révisées. Pas de rétention de passeport, juste la liberté à Krabi.",
+                        priceBike: "Dès 150 THB / Jour",
+                        feature1: "Assurance Incluse",
+                        feature2: "2 Casques fournis",
+                        bookNow: "Réserver via WhatsApp",
+                        weedTitle: "La Meilleure Weed de Krabi",
+                        weedDesc: "De la ferme à votre pipe. Notre lounge est le spot idéal pour chiller autour d'un billard.",
+                        priceWeed: "Dès 100 THB / gramme",
+                        qualityTag: "Qualité Premium Garantie",
+                        locTitle: "Comment s'y rendre",
+                        locAddress: "6 Khongkha Rd, Pak Nam, Krabi Town 81000",
+                        btnDirections: "Obtenir l'itinéraire",
+                        favTitle: "Le choix favori des locaux et des voyageurs !",
+                        favSub: "Rejoignez la communauté où la qualité rencontre le style de vie authentique de Krabi."
+                    },
+                    de: {
+                        heroTitle: "Beste Qualität. Günstige Preise.",
+                        heroSub: "Die besten Roller und Premium-Weed in Krabi Town. Keine Touristenfallen, nur echte Vibes.",
+                        btnRent: "Roller mieten",
+                        btnChill: "Coffee Shop besuchen",
+                        rentTitle: "Premium Vermietung",
+                        rentDesc: "Neue Motorräder, top gepflegt. Keine Pass-Hinterlegung, einfach Freiheit genießen.",
+                        priceBike: "Ab 150 THB / Tag",
+                        feature1: "Inklusive Versicherung",
+                        feature2: "2 Helme inklusive",
+                        bookNow: "Über WhatsApp buchen",
+                        weedTitle: "Bestes Weed in Krabi",
+                        weedDesc: "Von der Farm direkt zu dir. Unsere Lounge ist der perfekte Ort für Snooker und Entspannung.",
+                        priceWeed: "Ab 100 THB / Gramm",
+                        qualityTag: "Premium Quality Garantiert",
+                        locTitle: "Anfahrt",
+                        locAddress: "6 Khongkha Rd, Pak Nam, Krabi Town 81000",
+                        btnDirections: "Wegbeschreibung",
+                        favTitle: "Beliebt bei Einheimischen und Touristen!",
+                        favSub: "Werde Teil der Community, in der Qualität auf den authentischen Lifestyle von Krabi trifft."
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
